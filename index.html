@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>버블파이터 웹 (Bubble Fighter Web) v1.0.0</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 게임 화면 캔버스 -->
+  <div id="game-container">
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- 중앙 크로스헤어 (조준점) -->
+    <div id="crosshair">
+      <div class="cross-dot"></div>
+      <div class="cross-circle"></div>
+      <div class="cross-line top"></div>
+      <div class="cross-line bottom"></div>
+      <div class="cross-line left"></div>
+      <div class="cross-line right"></div>
+    </div>
+
+    <!-- 상단 스코어보드 -->
+    <header id="scoreboard">
+      <div class="team-panel blue-team">
+        <span class="team-label">BLUE (우리팀)</span>
+        <span id="score-blue" class="score-value">0</span>
+      </div>
+      <div class="match-info">
+        <div id="match-timer">03:00</div>
+        <div class="target-score">목표: 10 팡</div>
+      </div>
+      <div class="team-panel red-team">
+        <span id="score-red" class="score-value">0</span>
+        <span class="team-label">RED (적팀)</span>
+      </div>
+    </header>
+
+    <!-- 이벤트 피드 (킬로그 / 팡 알림) -->
+    <div id="feed-container"></div>
+
+    <!-- 하단 HUD -->
+    <footer id="hud">
+      <!-- 플레이어 상태 (HP) -->
+      <div id="health-container">
+        <div class="hud-label">HP</div>
+        <div class="health-bar-bg">
+          <div id="health-bar-fill"></div>
+          <span id="health-text">100 / 100</span>
+        </div>
+      </div>
+
+      <!-- 무기 슬롯 UI -->
+      <div id="weapon-dock">
+        <div class="weapon-slot" id="slot-1" data-key="1">
+          <span class="key-tag">1</span>
+          <span class="weapon-name">샷건</span>
+          <span class="ammo-tag" id="ammo-1">5/5</span>
+        </div>
+        <div class="weapon-slot" id="slot-2" data-key="2">
+          <span class="key-tag">2</span>
+          <span class="weapon-name">물총</span>
+          <span class="ammo-tag" id="ammo-2">15/15</span>
+        </div>
+        <div class="weapon-slot" id="slot-3" data-key="3">
+          <span class="key-tag">3</span>
+          <span class="weapon-name">망치</span>
+          <span class="ammo-tag" id="ammo-3">∞</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 게임 시작 / 포인터락 안내 오버레이 -->
+    <div id="start-screen" class="overlay-screen">
+      <div class="card">
+        <h1 class="logo-title">BUBBLE FIGHTER <span>WEB</span></h1>
+        <p class="badge">v1.0.0 Pure Canvas Edition</p>
+        <div class="guide-box">
+          <h3>🎮 게임 조작법</h3>
+          <ul>
+            <li><strong>W, A, S, D</strong> : 이동</li>
+            <li><strong>마우스 이동</strong> : 시점 회전 (3인칭 TPS 조준)</li>
+            <li><strong>마우스 좌클릭</strong> : 무기 발사 / 근접 공격</li>
+            <li><strong>1 / 2 / 3</strong> : 무기 교체 (1:샷건, 2:물총, 3:망치)</li>
+            <li><strong>R</strong> : 재장전</li>
+          </ul>
+          <h3>🫧 게임 룰</h3>
+          <ul>
+            <li>HP가 0이 되면 <strong>버블(물방울)</strong>에 갇힙니다!</li>
+            <li><strong>팡 (PANG)</strong>: 버블 상태인 적에게 <strong>근접하여 좌클릭</strong>하면 터뜨리고 1점 획득!</li>
+            <li><strong>헬프 (HELP)</strong>: 버블 상태인 아군에게 <strong>가까이 다가가 몸을 부딪히면</strong> 구출!</li>
+          </ul>
+        </div>
+        <button id="btn-start" class="btn-play">화면 클릭하여 게임 시작</button>
+      </div>
+    </div>
+
+    <!-- 게임 결과 (승리/패배) 모달 -->
+    <div id="game-over-screen" class="overlay-screen hidden">
+      <div class="card">
+        <h1 id="game-result-title">VICTORY!</h1>
+        <p id="game-result-desc">블루팀이 승리했습니다!</p>
+        <div class="result-stats">
+          <div>최종 스코어: <span id="final-score-text">10 : 7</span></div>
+        </div>
+        <button id="btn-restart" class="btn-play">다시 시작하기</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
+
